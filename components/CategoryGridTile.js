@@ -1,16 +1,12 @@
 import { View, Pressable, Text } from "react-native";
 import { createStyle } from "../utils";
 
-function CategoryGridTile({ title, color }) {
-  function handleNavigation() {
-    console.debug("Oh yeah");
-  }
-
+function CategoryGridTile({ title, color, callback }) {
   return (
     <View style={[styles.tileView, { backgroundColor: color }]}>
       <Pressable
         style={styles.tilePressable}
-        onPress={handleNavigation}
+        onPress={callback}
         android_ripple={{ color: "white" }}
       >
         <Text style={styles.tileText}>{title}</Text>
@@ -37,7 +33,7 @@ const styles = createStyle({
     padding: 16,
   },
   tileText: {
-    fontSize: 13,
+    fontSize: 16,
     fontWeight: "bold",
     color: "#000",
   },

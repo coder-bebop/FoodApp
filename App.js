@@ -11,7 +11,12 @@ export default function App() {
     <>
       <StatusBar style="auto" />
       <SafeAreaView style={styles.container}>
-        <CategoriesScreen />
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Categories">
+            <Stack.Screen name="Categories" component={CategoriesScreen} />
+            <Stack.Screen name="Meals" component={MealsScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
       </SafeAreaView>
     </>
   );
