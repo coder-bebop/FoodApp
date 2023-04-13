@@ -3,7 +3,7 @@ import CategoryGridTile from "../components/CategoryGridTile";
 import { CATEGORIES } from "../constants/data";
 
 function CategoriesScreen({ navigation }) {
-  function CategoryItem({ item }) {
+  function renderCategoryItem({ item }) {
     function handleNavigation() {
       navigation.navigate("Meals", {
         categoryId: item.id,
@@ -23,7 +23,7 @@ function CategoriesScreen({ navigation }) {
     <FlatList
       data={CATEGORIES}
       keyExtractor={({ id }) => id}
-      renderItem={CategoryItem}
+      renderItem={renderCategoryItem}
       numColumns={2}
     />
   );
