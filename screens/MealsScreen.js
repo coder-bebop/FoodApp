@@ -9,7 +9,13 @@ function MealsScreen({ route }) {
   );
 
   function renderMealItem({ item }) {
-    return <MealGridTile title={item.title} image={item.imageUrl} />;
+    return (
+      <MealGridTile
+        title={item.title}
+        image={item.imageUrl}
+        duration={item.duration}
+      />
+    );
   }
 
   return (
