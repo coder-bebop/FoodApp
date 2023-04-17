@@ -40,7 +40,7 @@ const styles = createStyle({
     margin: 20,
   },
   foodImage: {
-    borderWidth: 1000,
+    borderWidth: 10,
     width: 200,
     height: 200,
     marginBottom: 20,
