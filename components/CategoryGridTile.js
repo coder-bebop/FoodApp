@@ -1,12 +1,26 @@
 import { View, Pressable, Text } from "react-native";
 import { createStyle } from "../utils";
+import { useNavigation } from "@react-navigation/native";
+import { useContext } from "react";
+import { ColorContext } from "../store/context/ColorContext";
 
-function CategoryGridTile({ title, color, callback }) {
+function CategoryGridTile({ id, title, color }) {
+  const navigation = useNavigation();
+  const { changeCategoryColor } = useContext(ColorContext);
+
+  function navigateToMealsScreen() {
+    changeCategoryColor(color);
+
+    navigation.navigate("Meals", {
+      categoryId: id,
+    });
+  }
+
   return (
     <View style={[styles.tileView, { backgroundColor: color }]}>
       <Pressable
         style={styles.tilePressable}
-        onPress={callback}
+        onPress={navigateToMealsScreen}
         android_ripple={{ color: "white" }}
       >
         <Text style={styles.tileText}>{title}</Text>
@@ -22,7 +36,10 @@ const styles = createStyle({
     margin: 16,
     height: 150,
     borderRadius: 8,
-    elevation: 4,
+    elevation: 12,
+    shadowColor: "#000",
+    shadowOffset: { width: 2, height: 2 },
+    shadowRadius: 2,
   },
   tilePressable: {
     alignItems: "center",
