@@ -1,8 +1,9 @@
 import { useContext } from "react";
-import { FlatList } from "react-native";
+import { View, FlatList, Text } from "react-native";
 import MealGridTile from "../components/MealGridTile";
 import { MEALS } from "../constants/data";
-import { FavoriteContext } from "../store/context/FavoriteMealContext";
+import { FavoriteContext } from "../store/context/FavoriteContext";
+import { createStyle } from "../utils";
 
 function FavoritesScreen() {
   const { favoriteMeals } = useContext(FavoriteContext);
@@ -15,7 +16,13 @@ function FavoritesScreen() {
     return <MealGridTile {...item} />;
   }
 
-  return (
+  return favoriteMeals.length === 0 ? (
+    <View style={styles.defaultMessageView}>
+      <Text style={styles.defaultMessageText}>
+        You haven't chosen any favorites
+      </Text>
+    </View>
+  ) : (
     <FlatList
       data={MEALS}
       keyExtractor={({ id }) => id}
@@ -23,5 +30,14 @@ function FavoritesScreen() {
     />
   );
 }
+
+const styles = createStyle({
+  defaultMessageView: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  defaultMessageText: { fontSize: 20, textAlign: "center" },
+});
 
 export default FavoritesScreen;

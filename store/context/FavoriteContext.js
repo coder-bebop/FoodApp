@@ -9,13 +9,19 @@ function FavoriteContextProvider({ children }) {
   const [favoriteMealIds, setFavoriteMealIds] = useState([]);
 
   function addOrRemove(id) {
+    let wasAdded;
+
     setFavoriteMealIds((mealIds) => {
       if (!mealIds.includes(id)) {
+        wasAdded = true;
         return [...mealIds, id];
       }
 
+      wasAdded = false;
       return mealIds.filter((meal) => meal !== id);
     });
+
+    return wasAdded;
   }
 
   const contextValue = {

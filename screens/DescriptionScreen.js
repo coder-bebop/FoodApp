@@ -3,17 +3,26 @@ import { View, Text, Image, ScrollView } from "react-native";
 import IconButton from "../components/IconButton";
 import TextList from "../components/TextList";
 import { ColorContext } from "../store/context/ColorContext";
-import { FavoriteContext } from "../store/context/FavoriteMealContext";
+import { FavoriteContext } from "../store/context/FavoriteContext";
 import { createStyle } from "../utils";
+import Toast from "react-native-root-toast";
 
 function DescriptionScreen({ navigation, route }) {
   const mealData = route.params;
   const { categoryColor } = useContext(ColorContext);
   const { setFavoriteMeal } = useContext(FavoriteContext);
+  const addedToast = "Added to favorites";
+  const removedToast = "Removed from favorites";
+
+  function showToast(message) {
+    Toast.show(message, { duration: Toast.durations.SHORT });
+  }
 
   function createFavoriteButton() {
     function favoriteButtonCallback() {
-      setFavoriteMeal(mealData.id);
+      const wasAdded = setFavoriteMeal(mealData.id);
+
+      showToast(wasAdded ? addedToast : removedToast);
     }
 
     return (
