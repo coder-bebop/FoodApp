@@ -1,12 +1,31 @@
-import { useContext } from "react";
+import { useContext, useLayoutEffect } from "react";
 import { View, Text, Image, ScrollView } from "react-native";
+import IconButton from "../components/IconButton";
 import TextList from "../components/TextList";
 import { ColorContext } from "../store/context/ColorContext";
+import { FavoriteContext } from "../store/context/FavoriteMealContext";
 import { createStyle } from "../utils";
 
-function DescriptionScreen({ route }) {
+function DescriptionScreen({ navigation, route }) {
   const mealData = route.params;
   const { categoryColor } = useContext(ColorContext);
+  const { setFavoriteMeal } = useContext(FavoriteContext);
+
+  function createFavoriteButton() {
+    function favoriteButtonCallback() {
+      setFavoriteMeal(mealData.id);
+    }
+
+    return (
+      <IconButton icon="star" color="white" callback={favoriteButtonCallback} />
+    );
+  }
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerRight: createFavoriteButton,
+    });
+  });
 
   return (
     <View style={styles.screen}>
@@ -60,13 +79,19 @@ const styles = createStyle({
   subtitle: {
     backgroundColor: "brown",
     fontSize: 20,
+    padding: 3,
     fontWeight: "900",
     color: "white",
     textAlign: "center",
-    marginBottom: 7,
+    alignItems: "center",
+    justifyContent: "center",
+    marginBottom: 5,
+    textShadowColor: "#000",
+    textShadowOffset: { width: 1.5, height: 1.5 },
+    textShadowRadius: 1.5,
   },
   ingredientsView: {
-    marginBottom: 25,
+    marginBottom: 28,
     alignItems: "center",
   },
   ingredient: {
@@ -76,17 +101,16 @@ const styles = createStyle({
     fontSize: 16,
   },
   stepsView: {
-    padding: 20,
-    backgroundColor: "#ddd492",
-    borderRadius: 10,
+    padding: 10,
   },
   step: {
-    fontSize: 16,
-    margin: 4,
-    padding: 8,
     backgroundColor: "#c9a",
     borderRadius: 20,
     borderWidth: 1,
+    fontSize: 16,
+    margin: 3,
+    padding: 3,
+    textAlign: "center",
   },
 });
 
